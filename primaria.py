@@ -15,6 +15,7 @@ def receptor():
         mensagem = mensagem.encode('utf-8')
         socket_operacoes.sendall(mensagem)
 
+    ultimo_saldo = 0
     saldo = 0
     contador = 0
     replicas = [3000, 4000, 5000, 6000]
@@ -62,6 +63,7 @@ def receptor():
                 contador += 1
                 if (contador == 4):
                     print("Cálculo (OK).")
+                    ultimo_saldo = saldo
                     mensagem = id + "/600/" + str(saldo)
                     thread_sucesso = threading.Thread(target = conexao_operacoes, args=[PORTA_CLIENTE, mensagem])
                     thread_sucesso.start()
@@ -70,6 +72,9 @@ def receptor():
                 contador += 1
                 if (contador == 4):
                     print("Não Houve Acordo (NHA).")
+                    mensagem = id + "/700/" + str(ultimo_saldo)
+                    thread_erro = threading.Thread(target = conexao_operacoes, args=[PORTA_CLIENTE, mensagem])
+                    thread_erro.start()
                     contador = 0
 
         conexao.close()

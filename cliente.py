@@ -25,8 +25,9 @@ def receptor():
             if (tipo_operacao == "600"):
                 print(f"\nMensagem Recebida. ID: {id}. Saldo Atual: {valor}")
                 break
-            else:
+            elif (tipo_operacao == "700"):
                 print("Aconteceu algum erro!")
+                print(f"\nMensagem Recebida. ID: {id}. Saldo Atual: {valor}")
                 break
 
         conexao.close()
